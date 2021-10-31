@@ -2,16 +2,18 @@ import React, { useRef } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as posenet from "@tensorflow-models/posenet";
 import Webcam from "react-webcam";
-import { drawKeypoints, drawSkeleton } from "../utilities.js";
+import { drawKeypoints, drawSkeleton } from "../utilities";
 
 export default function AiCam() {
-  const webcamRef = useRef();
-  const canvasRef = useRef();
+  const webcamRef = useRef<Webcam>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const runPosenet = async () => {
     const net = await posenet.load({
       inputResolution: { width: 640, height: 480 },
-      scale: 0.8,
+      multiplier: 0.75,
+      architecture: "MobileNetV1",
+      outputStride: 16,
     });
     //
     setInterval(() => {
@@ -19,10 +21,11 @@ export default function AiCam() {
     }, 100);
   };
 
-  const detect = async (net) => {
+  const detect = async (net: any) => {
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
+      webcamRef.current.video !== null &&
       webcamRef.current.video.readyState === 4
     ) {
       // Get Video Properties
@@ -36,13 +39,19 @@ export default function AiCam() {
 
       // Make Detections
       const pose = await net.estimateSinglePose(video);
-      console.log(pose);
+      //   console.log(pose);
 
       drawCanvas(pose, video, videoWidth, videoHeight, canvasRef);
     }
   };
 
-  const drawCanvas = (pose, video, videoWidth, videoHeight, canvas) => {
+  const drawCanvas = (
+    pose: any,
+    video: any,
+    videoWidth: any,
+    videoHeight: any,
+    canvas: any
+  ) => {
     const ctx = canvas.current.getContext("2d");
     canvas.current.width = videoWidth;
     canvas.current.height = videoHeight;
@@ -63,7 +72,7 @@ export default function AiCam() {
           left: 0,
           right: 0,
           textAlign: "center",
-          zindex: 9,
+          zIndex: 9,
           width: 320,
           height: 240,
         }}
@@ -77,7 +86,7 @@ export default function AiCam() {
           left: 0,
           right: 0,
           textAlign: "center",
-          zindex: 9,
+          zIndex: 9,
           width: 320,
           height: 240,
         }}
