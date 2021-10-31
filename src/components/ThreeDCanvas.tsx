@@ -2,7 +2,7 @@ import * as THREE from "three";
 import ReactDOM from "react-dom";
 import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-
+import BaseModel from "../BASEmodel";
 function Box(props: JSX.IntrinsicElements["mesh"]) {
   const ref = useRef<THREE.Mesh>(null!);
   const [hovered, setHover] = useState(false);
@@ -28,8 +28,9 @@ export default function ThreeDCanvas() {
     <Canvas>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
+      <BaseModel position={[0, -2, 0]} />
+      {/* <Box position={[-1.2, 0, 0]} />
+      <Box position={[1.2, 0, 0]} /> */}
     </Canvas>
   );
 }
