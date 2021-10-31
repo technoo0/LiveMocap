@@ -9,7 +9,7 @@ using tenserflowJs and posenet we get the skeleton postion of the user and then 
 ## Run
 
 ```
-https://github.com/technoo0/LiveMokab.git
+git clone https://github.com/technoo0/LiveMokab.git
 ```
 
 ```
