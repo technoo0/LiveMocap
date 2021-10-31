@@ -1,6 +1,6 @@
 # Live Mocap
 
-live mocap is a website to create mocap animation in the browser
+create mocap animations using your webcam in the browser
 
 ![iPi-Soft-website-Virtuo-image](https://user-images.githubusercontent.com/65347532/139605454-aad354bf-32b4-4c88-aa74-91a959a0b681.jpg)
 
@@ -17,6 +17,9 @@ git clone https://github.com/technoo0/LiveMokab.git
 
 ```
 npm install
+```
+
+```
 npm run dev
 ```
 
