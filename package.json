@@ -7,6 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^7.19.3",
     "@react-three/fiber": "^7.0.17",
     "@tensorflow-models/posenet": "^2.2.2",
     "@tensorflow/tfjs": "^3.11.0",
