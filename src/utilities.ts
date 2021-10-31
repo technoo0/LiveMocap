@@ -22,10 +22,15 @@ export function isMobile() {
   return isAndroid() || isiOS();
 }
 
-function setDatGuiPropertyCss(propertyText, liCssString, spanCssString = "") {
-  var spans = document.getElementsByClassName("property-name");
+function setDatGuiPropertyCss(
+  propertyText: string,
+  liCssString: any,
+  spanCssString = ""
+) {
+  var spans: any = document.getElementsByClassName("property-name");
   for (var i = 0; i < spans.length; i++) {
     var text = spans[i].textContent || spans[i].innerText;
+
     if (text == propertyText) {
       spans[i].parentNode.parentNode.style = liCssString;
       if (spanCssString !== "") {
@@ -47,24 +52,26 @@ export function updateTryResNetButtonDatGuiCss() {
  * Toggles between the loading UI and the main canvas UI.
  */
 export function toggleLoadingUI(
-  showLoadingUI,
+  showLoadingUI: any,
   loadingDivId = "loading",
   mainDivId = "main"
 ) {
+  const loadingDiv = document.getElementById(loadingDivId)!;
+  const mainDiv = document.getElementById(mainDivId)!;
   if (showLoadingUI) {
-    document.getElementById(loadingDivId).style.display = "block";
-    document.getElementById(mainDivId).style.display = "none";
+    loadingDiv.style.display = "block";
+    mainDiv.style.display = "none";
   } else {
-    document.getElementById(loadingDivId).style.display = "none";
-    document.getElementById(mainDivId).style.display = "block";
+    loadingDiv.style.display = "none";
+    mainDiv.style.display = "block";
   }
 }
 
-function toTuple({ y, x }) {
+function toTuple({ y, x }: any) {
   return [y, x];
 }
 
-export function drawPoint(ctx, y, x, r, color) {
+export function drawPoint(ctx: any, y: any, x: any, r: any, color: any) {
   ctx.beginPath();
   ctx.arc(x, y, r, 0, 2 * Math.PI);
   ctx.fillStyle = color;
@@ -74,7 +81,13 @@ export function drawPoint(ctx, y, x, r, color) {
 /**
  * Draws a line on a canvas, i.e. a joint
  */
-export function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
+export function drawSegment(
+  [ay, ax]: any,
+  [by, bx]: any,
+  color: any,
+  scale: any,
+  ctx: any
+) {
   ctx.beginPath();
   ctx.moveTo(ax * scale, ay * scale);
   ctx.lineTo(bx * scale, by * scale);
@@ -86,7 +99,12 @@ export function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
 /**
  * Draws a pose skeleton by looking up all adjacent keypoints/joints
  */
-export function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
+export function drawSkeleton(
+  keypoints: any,
+  minConfidence: any,
+  ctx: any,
+  scale = 1
+) {
   const adjacentKeyPoints = posenet.getAdjacentKeyPoints(
     keypoints,
     minConfidence
@@ -106,7 +124,12 @@ export function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
 /**
  * Draw pose keypoints onto a canvas
  */
-export function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
+export function drawKeypoints(
+  keypoints: any,
+  minConfidence: any,
+  ctx: any,
+  scale = 1
+) {
   for (let i = 0; i < keypoints.length; i++) {
     const keypoint = keypoints[i];
 
@@ -124,7 +147,7 @@ export function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
  * in an image, the bounding box will begin at the nose and extend to one of
  * ankles
  */
-export function drawBoundingBox(keypoints, ctx) {
+export function drawBoundingBox(keypoints: any, ctx: any) {
   const boundingBox = posenet.getBoundingBox(keypoints);
 
   ctx.rect(
@@ -141,7 +164,7 @@ export function drawBoundingBox(keypoints, ctx) {
 /**
  * Converts an arary of pixel data into an ImageData object
  */
-export async function renderToCanvas(a, ctx) {
+export async function renderToCanvas(a: any, ctx: any) {
   const [height, width] = a.shape;
   const imageData = new ImageData(width, height);
 
@@ -163,7 +186,7 @@ export async function renderToCanvas(a, ctx) {
 /**
  * Draw an image on a canvas
  */
-export function renderImageToCanvas(image, size, canvas) {
+export function renderImageToCanvas(image: any, size: any, canvas: any) {
   canvas.width = size[0];
   canvas.height = size[1];
   const ctx = canvas.getContext("2d");
@@ -176,7 +199,11 @@ export function renderImageToCanvas(image, size, canvas) {
  * Read our blog post for a description of PoseNet's heatmap outputs
  * https://medium.com/tensorflow/real-time-human-pose-estimation-in-the-browser-with-tensorflow-js-7dd0bc881cd5
  */
-export function drawHeatMapValues(heatMapValues, outputStride, canvas) {
+export function drawHeatMapValues(
+  heatMapValues: any,
+  outputStride: any,
+  canvas: any
+) {
   const ctx = canvas.getContext("2d");
   const radius = 5;
   const scaledValues = heatMapValues.mul(tf.scalar(outputStride, "int32"));
@@ -188,7 +215,7 @@ export function drawHeatMapValues(heatMapValues, outputStride, canvas) {
  * Used by the drawHeatMapValues method to draw heatmap points on to
  * the canvas
  */
-function drawPoints(ctx, points, radius, color) {
+function drawPoints(ctx: any, points: any, radius: any, color: any) {
   const data = points.buffer().values;
 
   for (let i = 0; i < data.length; i += 2) {
